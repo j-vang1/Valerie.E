@@ -99,7 +99,10 @@
   <script>
     function answer(choice) {
       if (choice === 'yes') {
-        alert("GO HERE!! https://docs.google.com/document/d/1Tew1yPuHQSuyCF5YDHgH8IXXDg9S5toc28-fXRsNmT0/edit?usp=sharing");
+        window.open(
+      'https://docs.google.com/document/d/1Tew1yPuHQSuyCF5YDHgH8IXXDg9S5toc28-fXRsNmT0/edit?usp=sharing',
+      '_blank'
+    );
       } else {
         alert("Nah try again.");
       }
