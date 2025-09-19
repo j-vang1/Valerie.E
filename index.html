@@ -12,8 +12,12 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       position: relative;
-      overflow: hidden;
-      width: 100vw; height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 2rem 1rem;
       font-family: 'Caveat', cursive;
       background-color: #ffc0cb;
       background-image:
@@ -54,6 +58,7 @@
       text-align: center;
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
       max-width: 90%;
+      margin: 0 auto;
     }
 
     /* heading */
@@ -83,6 +88,14 @@
       position: absolute;
       top: 50%;
       left: 60%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        align-items: flex-start;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
     }
   </style>
 </head>
