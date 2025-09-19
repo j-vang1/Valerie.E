@@ -70,13 +70,31 @@
       text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
 
-    /* choice images */
+    /* choice buttons */
     .choice {
+      display: inline-block;
       height: 2.7rem;
       width: auto;
-      object-fit: contain;
+      border: none;
+      background: none;
+      padding: 0;
       cursor: pointer;
       transition: transform 0.2s ease;
+    }
+
+    .choice:focus {
+      outline: none;
+    }
+
+    .choice:focus-visible {
+      outline: 3px solid #D147A3;
+      outline-offset: 4px;
+    }
+
+    .choice img {
+      display: block;
+      height: 100%;
+      width: auto;
     }
 
     .choice.yes {
@@ -105,8 +123,12 @@
 
   <div class="card">
     <h1>🌷 Will you be my Girlfriend? 🌷</h1>
-    <img src="/Valerie.E/Yes.jpg" id="yesBtn"  alt="Yes" class="choice yes" onclick="answer('yes')" />
-    <img src="/Valerie.E/No.jpg"  id="noBtn"   alt="No"  class="choice no"  />
+    <button type="button" id="yesBtn" class="choice yes">
+      <img src="/Valerie.E/Yes.jpg" alt="Yes">
+    </button>
+    <button type="button" id="noBtn" class="choice no">
+      <img src="/Valerie.E/No.jpg" alt="No">
+    </button>
   </div>
 
   <script>
@@ -128,6 +150,8 @@
       const card      = document.querySelector('.card');
       const baseYesWidth = yesBtn.getBoundingClientRect().width;
       let scale = 1;
+
+      yesBtn.addEventListener('click', () => answer('yes'));
 
       function computeMaxScale() {
         const styles = window.getComputedStyle(card);
