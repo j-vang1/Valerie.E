@@ -126,10 +126,35 @@
       const noBtn     = document.getElementById('noBtn');
       const yesBtn    = document.getElementById('yesBtn');
       const card      = document.querySelector('.card');
-      const baseYesWidth = yesBtn.getBoundingClientRect().width;
+      let baseYesWidth = 0;
       let scale = 1;
 
+      function updateBaseYesWidth() {
+        const measuredWidth = yesBtn.getBoundingClientRect().width;
+        if (measuredWidth > 0) {
+          baseYesWidth = measuredWidth;
+        } else if (yesBtn.naturalWidth > 0) {
+          baseYesWidth = yesBtn.naturalWidth;
+        }
+      }
+
+      if (yesBtn.complete) {
+        updateBaseYesWidth();
+      } else {
+        yesBtn.addEventListener(
+          'load',
+          () => {
+            updateBaseYesWidth();
+            clampYesScale();
+          },
+          { once: true }
+        );
+      }
+
       function computeMaxScale() {
+        if (baseYesWidth <= 0) {
+          return 1;
+        }
         const styles = window.getComputedStyle(card);
         const paddingLeft = parseFloat(styles.paddingLeft) || 0;
         const paddingRight = parseFloat(styles.paddingRight) || 0;
