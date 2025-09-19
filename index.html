@@ -113,7 +113,21 @@
       const noBtn     = document.getElementById('noBtn');
       const yesBtn    = document.getElementById('yesBtn');
       const card      = document.querySelector('.card');
+      const baseYesWidth = yesBtn.getBoundingClientRect().width;
       let scale = 1;
+
+      function computeMaxScale() {
+        const styles = window.getComputedStyle(card);
+        const paddingLeft = parseFloat(styles.paddingLeft) || 0;
+        const paddingRight = parseFloat(styles.paddingRight) || 0;
+        const marginLeft = parseFloat(styles.marginLeft) || 0;
+        const marginRight = parseFloat(styles.marginRight) || 0;
+        const availableWidth = Math.max(
+          0,
+          card.clientWidth - paddingLeft - paddingRight - marginLeft - marginRight
+        );
+        return Math.min(8, availableWidth / baseYesWidth);
+      }
 
       // spawn floating flowers
       for (let i = 0; i < 50; i++) {
@@ -133,11 +147,19 @@
         const { width: bw, height: bh } = noBtn.getBoundingClientRect();
         noBtn.style.left = Math.random() * (cw - bw) + 'px';
         noBtn.style.top  = Math.random() * (ch - bh) + 'px';
-        scale = Math.min(scale + 0.2, 8);
+        scale = Math.min(scale + 0.2, computeMaxScale());
         yesBtn.style.transform = `scale(${scale})`;
       }
       noBtn.addEventListener('mouseover', moveNo);
       noBtn.addEventListener('click', moveNo);
+
+      function clampYesScale() {
+        scale = Math.min(scale, computeMaxScale());
+        yesBtn.style.transform = `scale(${scale})`;
+      }
+
+      window.addEventListener('resize', clampYesScale);
+      clampYesScale();
     });
   </script>
 </body>
